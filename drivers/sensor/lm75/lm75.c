@@ -125,7 +125,7 @@ static void lm75_temp_to_sensor_value(int16_t raw, struct sensor_value *val)
     val->val1 = (int32_t)temp_c;
     val->val2 = (int32_t)((temp_c - val->val1) * 1000000);
 }
-#else
+#else /* CONFIG_LM75_12BIT */
 /** default is 9bit resolution only */
 static void lm75_temp_to_sensor_value(int16_t temp, struct sensor_value *val)
 {
@@ -138,7 +138,7 @@ static void lm75_temp_to_sensor_value(int16_t temp, struct sensor_value *val)
 	/* Fractional part in micro degrees Celsius */
 	val->val2 = (temp - val->val1 * 10) * 100000U;
 }
-#endif
+#endif /* ! CONFIG_LM75_12BIT */
 
 static int lm75_attr_set(const struct device *dev, enum sensor_channel chan,
 			 enum sensor_attribute attr, const struct sensor_value *val)
