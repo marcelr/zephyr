@@ -116,10 +116,10 @@ static void lm75_sensor_value_to_temp(const struct sensor_value *val, int16_t *t
 #ifdef CONFIG_LM75_12BIT
 static void lm75_temp_to_sensor_value(int16_t raw, struct sensor_value *val)
 {
-    // Right shift to get 12 MSBs, sign-extend if negative
+    /* Right shift to get 12 MSBs, sign-extend if negative */
     raw >>= 4;
-    if (raw & 0x800) { // 0x800 = sign bit for 12 bits
-        raw |= 0xF000; // Sign-extend to 16 bits
+    if (raw & 0x800) { /* 0x800 = sign bit for 12 bits */
+        raw |= 0xF000; /* Sign-extend to 16 bits */
     }
     float temp_c = raw * 0.0625f;
     val->val1 = (int32_t)temp_c;
